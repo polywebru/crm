@@ -10,6 +10,8 @@ services:
       - ./confd/local.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - crm-php-fpm
+    networks:
+      - app-network
 
   crm-php-fpm:
     build:
@@ -34,10 +36,12 @@ services:
       PHP_IDE_CONFIG: "serverName=Docker"
     depends_on:
       - crm-mysql
+    networks:
+      - app-network
 
   crm-mysql:
+    container_name: crm-mysql
     image: mysql:8
-    restart: always
     volumes:
       - ./docker/mysql:/var/lib/mysql
     ports:
@@ -47,6 +51,12 @@ services:
       MYSQL_USER: homestead
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: supersecret
+    networks:
+      - app-network
 
   redis:
     image: redis:4
+
+networks:
+  app-network:
+    driver: bridge

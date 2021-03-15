@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.
@@ -26,38 +26,50 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string|null
      */
-    // protected $namespace = 'App\\Http\\Controllers';
+    protected $authNamespace = 'App\\Http\\Controllers\\Auth';
+    protected $adminNamespace = 'App\\Http\\Controllers\\Api\\Admin';
+    protected $apiNamespace = 'App\\Http\\Controllers\\Api\\User';
 
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->configureRateLimiting();
-
-        $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-        });
     }
 
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+    }
+
+    public function map()
+    {
+        $this->mapAuthRoutes();
+        $this->mapUserApiRoutes();
+        $this->mapAdminApiRoutes();
+    }
+
+    public function mapAuthRoutes()
+    {
+        Route::middleware(['api'])
+            ->namespace($this->authNamespace)
+            ->group(base_path('/routes/auth.php'));
+    }
+
+    public function mapUserApiRoutes()
+    {
+        Route::prefix('api/v1')
+            ->middleware(['api', 'auth'])
+            ->namespace($this->apiNamespace)
+            ->group(base_path('routes/api/user.php'));
+    }
+
+    public function mapAdminApiRoutes()
+    {
+        Route::prefix('api/v1/admin')
+            ->middleware(['api', 'auth'])
+            ->namespace($this->adminNamespace)
+            ->name('admin.')
+            ->group(base_path('/routes/api/admin.php'));
     }
 }
