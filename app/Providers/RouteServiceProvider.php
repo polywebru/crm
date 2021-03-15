@@ -27,8 +27,9 @@ class RouteServiceProvider extends ServiceProvider
      * @var string|null
      */
     protected $authNamespace = 'App\\Http\\Controllers\\Auth';
-    protected $adminNamespace = 'App\\Http\\Controllers\\Api\\Admin';
-    protected $apiNamespace = 'App\\Http\\Controllers\\Api\\User';
+    protected $apiNamespace = 'App\\Http\\Controllers\\Api';
+    protected $adminApiNamespace = 'App\\Http\\Controllers\\Api\\Admin';
+    protected $userApiNamespace = 'App\\Http\\Controllers\\Api\\User';
 
     public function boot()
     {
@@ -45,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapAuthRoutes();
+        $this->mapApiRoutes();
         $this->mapUserApiRoutes();
         $this->mapAdminApiRoutes();
     }
@@ -56,11 +58,18 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('/routes/auth.php'));
     }
 
+    public function mapApiRoutes()
+    {
+        Route::middleware(['api', 'auth'])
+            ->namespace($this->apiNamespace)
+            ->group(base_path('/routes/api.php'));
+    }
+
     public function mapUserApiRoutes()
     {
         Route::prefix('api/v1')
             ->middleware(['api', 'auth'])
-            ->namespace($this->apiNamespace)
+            ->namespace($this->userApiNamespace)
             ->group(base_path('routes/api/user.php'));
     }
 
@@ -68,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api/v1/admin')
             ->middleware(['api', 'auth'])
-            ->namespace($this->adminNamespace)
+            ->namespace($this->adminApiNamespace)
             ->name('admin.')
             ->group(base_path('/routes/api/admin.php'));
     }
