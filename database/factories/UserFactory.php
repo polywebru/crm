@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Speciality;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -30,6 +31,11 @@ class UserFactory extends Factory
             'middle_name' => $this->faker->firstName,
             'gender' => ($this->faker->boolean) ? 'male' : 'female',
             'date_birth' => $this->faker->dateTime,
+            'speciality_id' => function () {
+                return Speciality::factory()->create()->id;
+            },
+            'study_begin_date' => $this->faker->date(),
+            'study_duration' => User::BAKALAVRIAT_DURATION,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'last_sign_in_at' => now(),
             'email_verified_at' => now(),

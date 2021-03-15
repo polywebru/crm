@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\Skill;
+use App\Models\Speciality;
 use App\Models\User;
 use App\Traits\HasPhone;
 use Carbon\Carbon;
@@ -53,7 +55,19 @@ class UserManager
             $params['phone'] = (isset($params['phone'])) ? $this->preparePhone($params['phone']) : null;
             $this->user->fill($params);
             $this->user->password = Hash::make($params['password']);
+
+            if ($params['speciality_id']) {
+                $this->user->speciality()->associate(Speciality::findOrFail($params['speciality_id']));
+            }
+
             $this->user->save();
+
+            foreach ($params['skills'] as $skillParam) {
+                $skill = app(Skill::class);
+                $skill->name = $skillParam['name'];
+                $skill->user()->associate($this->user);
+                $skill->save();
+            }
         });
 
         return $this->user;
