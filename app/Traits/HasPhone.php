@@ -11,7 +11,7 @@ trait HasPhone
         $phone = str_replace('(', '', $phone);
         $phone = str_replace(')', '', $phone);
         $phone = str_replace('-', '', $phone);
-        $phone = str_replace('+7', '8', $phone);
+        $phone = str_replace('+7', '7', $phone);
 
         return $phone;
     }
