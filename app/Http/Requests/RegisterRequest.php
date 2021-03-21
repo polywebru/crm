@@ -12,14 +12,14 @@ class RegisterRequest extends FormRequest
     private const VARCHAR_MAX_LENGTH = 255;
     private const PASSWORD_MIN_LENGTH = 5;
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
+            'username' => [
+                'nullable',
+                'string',
+                'unique:users',
+            ],
             'email' => [
                 'required',
                 'string',
