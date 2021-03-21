@@ -56,6 +56,16 @@ class Handler extends ExceptionHandler
                 'success' => false,
                 'error' => $error,
             ], 404);
+        } elseif ($e->getMessage() === 'Token has expired') {
+            $error = array_merge([
+                'code' => 401,
+                'message' => 'Время действия токена истекло.',
+            ], $trace);
+
+            return response()->json([
+                'success' => false,
+                'error' => $error,
+            ], 401);
         } elseif ($e instanceof ValidationException) {
             $error = array_merge([
                 'code' => 400,
@@ -66,16 +76,6 @@ class Handler extends ExceptionHandler
                 'success' => false,
                 'error' => $error,
             ], 400);
-        } elseif ($e->getMessage() === 'Token has expired') {
-            $error = array_merge([
-                'code' => 401,
-                'errors' => 'Время действия токена истекло.',
-            ], $trace);
-
-            return response()->json([
-                'success' => false,
-                'error' => $trace
-            ], 401);
         } else {
             $error = array_merge([
                 'code' => $e->getCode(),
