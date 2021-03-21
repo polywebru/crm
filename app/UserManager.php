@@ -6,6 +6,7 @@ use App\Models\Skill;
 use App\Models\Speciality;
 use App\Models\User;
 use App\Traits\HasPhone;
+use App\Traits\HasUsername;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 class UserManager
 {
     use HasPhone;
+    use HasUsername;
 
     private ?User $user;
 
@@ -52,6 +54,8 @@ class UserManager
     {
         DB::transaction(function () use ($params) {
             $this->user = app(User::class);
+            $params['username'] =
+                (isset($params['username'])) ? $params['username'] : $this->getUsernameFromEmail($params['email']);
             $params['phone'] = (isset($params['phone'])) ? $this->preparePhone($params['phone']) : null;
             $this->user->fill($params);
             $this->user->password = Hash::make($params['password']);
