@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Role;
 use App\Models\Skill;
 use App\Models\Speciality;
 use App\Models\User;
@@ -65,6 +66,7 @@ class UserManager
             }
 
             $this->user->save();
+            $this->user->assignRole(Role::USER_ROLE);
 
             foreach ($params['skills'] as $skillParam) {
                 $skill = app(Skill::class);
