@@ -12,7 +12,9 @@ class Speciality extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
+        'profile',
     ];
 
     public function faculty(): BelongsTo

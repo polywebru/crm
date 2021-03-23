@@ -8,7 +8,9 @@ class SpecialityResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
+            'code' => $this->resource->code,
             'name' => $this->resource->name,
+            'profile' => $this->resource->profile,
             'faculty' => $this->whenLoaded('faculty'),
             'created_at' => $this->prepareDateTime($this->resource->created_at),
             'updated_at' => $this->prepareDateTime($this->resource->updated_at),
