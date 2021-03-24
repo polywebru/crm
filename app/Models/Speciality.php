@@ -17,6 +17,10 @@ class Speciality extends Model
         'profile',
     ];
 
+    protected $attributes = [
+        'profile' => null,
+    ];
+
     public function faculty(): BelongsTo
     {
         return $this->belongsTo(Faculty::class);
