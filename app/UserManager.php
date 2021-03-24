@@ -61,19 +61,8 @@ class UserManager
             $this->user->fill($params);
             $this->user->password = Hash::make($params['password']);
 
-            if ($params['speciality_id']) {
-                $this->user->speciality()->associate(Speciality::findOrFail($params['speciality_id']));
-            }
-
             $this->user->save();
             $this->user->assignRole(Role::USER_ROLE);
-
-            foreach ($params['skills'] as $skillParam) {
-                $skill = app(Skill::class);
-                $skill->name = $skillParam['name'];
-                $skill->user()->associate($this->user);
-                $skill->save();
-            }
         });
 
         return $this->user;

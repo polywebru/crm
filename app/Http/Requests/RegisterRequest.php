@@ -62,38 +62,6 @@ class RegisterRequest extends FormRequest
                 'nullable',
                 'date',
             ],
-            'faculty_id' => [
-                'nullable',
-                'numeric',
-                'exists:faculties,id',
-            ],
-            'speciality_id' => [
-                'nullable',
-                'required_with:faculty_id',
-                'numeric',
-                'exists:specialities,id',
-            ],
-            'study_begin_date' => [
-                'nullable',
-                'date',
-            ],
-            'study_duration' => [
-                'nullable',
-                Rule::in(array_flip(User::STUDY_DURATIONS)),
-            ],
-            'skills' => [
-                'nullable',
-                'array',
-            ],
-            'skills.*.name' => [
-                'nullable',
-                'string',
-                'max:' . self::VARCHAR_MAX_LENGTH,
-            ],
-            'wishes' => [
-                'nullable',
-                'string',
-            ],
         ];
     }
 }
