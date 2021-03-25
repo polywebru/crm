@@ -31,6 +31,14 @@ class User extends Authenticatable implements JWTSubject
         self::MAGISTRATURA_DURATION => 'Магистратура',
     ];
 
+    public const INTERN_STATUS = 'intern';
+    public const EMPLOYEE_STATUS = 'employee';
+
+    public const STATUSES = [
+        self::INTERN_STATUS => 'Стажёр',
+        self::EMPLOYEE_STATUS => 'Сотрудник',
+    ];
+
     protected $fillable = [
         'username',
         'email',
@@ -41,6 +49,7 @@ class User extends Authenticatable implements JWTSubject
         'gender',
         'date_birth',
         'is_active',
+        'status',
         'study_begin_date',
         'study_duration',
         'password',
