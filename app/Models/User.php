@@ -40,6 +40,7 @@ class User extends Authenticatable implements JWTSubject
         'middle_name',
         'gender',
         'date_birth',
+        'is_active',
         'study_begin_date',
         'study_duration',
         'wishes',
@@ -53,6 +54,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $casts = [
+        'is_active' => 'boolean',
         'study_begin_date' => 'date',
         'email_verified_at' => 'datetime',
         'last_sign_in_at' => 'datetime',

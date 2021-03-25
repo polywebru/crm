@@ -58,6 +58,7 @@ class UserManager
             $params['username'] =
                 (isset($params['username'])) ? $params['username'] : $this->getUsernameFromEmail($params['email']);
             $params['phone'] = (isset($params['phone'])) ? $this->preparePhone($params['phone']) : null;
+            $params['is_active'] = false;
             $this->user->fill($params);
             $this->user->password = Hash::make($params['password']);
 
