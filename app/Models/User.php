@@ -43,7 +43,6 @@ class User extends Authenticatable implements JWTSubject
         'is_active',
         'study_begin_date',
         'study_duration',
-        'wishes',
         'password',
         'last_sign_in_at',
     ];
