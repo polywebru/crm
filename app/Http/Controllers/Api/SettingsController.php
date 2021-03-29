@@ -12,6 +12,7 @@ class SettingsController extends Controller
     {
         return new JsonResource([
             'study_durations' => User::STUDY_DURATIONS,
+            'user_statuses' => User::STATUSES,
         ]);
     }
 }

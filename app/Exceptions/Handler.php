@@ -76,6 +76,8 @@ class Handler extends ExceptionHandler
                 'success' => false,
                 'error' => $error,
             ], 400);
+        } elseif ($e instanceof BaseException) {
+            return $e->render();
         } else {
             $error = array_merge([
                 'code' => $e->getCode(),
