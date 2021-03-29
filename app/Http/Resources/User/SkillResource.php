@@ -4,7 +4,7 @@ namespace App\Http\Resources\User;
 
 use App\Http\Resources\JsonResource;
 
-class RoleResource extends JsonResource
+class SkillResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

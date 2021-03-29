@@ -2,4 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('roles-and-permissions', 'RolesAndPermissionsController');
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', 'UserController@index');
+    Route::get('roles-and-permissions', 'RolesAndPermissionsController');
+});
