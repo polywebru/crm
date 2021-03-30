@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueEmail;
 use App\Rules\UniquePhone;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -23,7 +24,7 @@ class RegisterRequest extends FormRequest
                 'string',
                 'email',
                 'max:' . self::VARCHAR_MAX_LENGTH,
-                'unique:users',
+                new UniqueEmail(),
             ],
             'phone' => [
                 'nullable',
