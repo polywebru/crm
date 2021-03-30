@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\UniquePhone;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -54,6 +55,7 @@ class RegisterRequest extends FormRequest
             'gender' => [
                 'nullable',
                 'string',
+                Rule::in(['male', 'female']),
             ],
             'date_birth' => [
                 'nullable',
