@@ -23,10 +23,18 @@ class SpecialityFactory extends Factory
     public function definition()
     {
         return [
+            'code' => $this->getCode(),
             'name' => $this->faker->name,
             'faculty_id' => function () {
                 return Faculty::factory()->create()->id;
             },
         ];
+    }
+
+    private function getCode(): string
+    {
+        return $this->faker->numberBetween(1, 99) . "."
+            . $this->faker->numberBetween(1, 99) . "."
+            . $this->faker->numberBetween(1, 99);
     }
 }

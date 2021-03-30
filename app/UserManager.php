@@ -3,8 +3,6 @@
 namespace App;
 
 use App\Models\Role;
-use App\Models\Skill;
-use App\Models\Speciality;
 use App\Models\User;
 use App\Traits\HasPhone;
 use App\Traits\HasUsername;
@@ -78,6 +76,18 @@ class UserManager
         $this->user->update($params);
 
         return $this->user;
+    }
+
+    public function updateContactInfo(array $params): User
+    {
+        $params['phone'] = $this->preparePhone($params['phone']);
+
+        return $this->update($params);
+    }
+
+    public function updatePassword(string $password): User
+    {
+        return $this->update(['password' => $password]);
     }
 
     public function updateLastSignInAt(Carbon $date)

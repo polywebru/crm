@@ -3,14 +3,11 @@
 namespace App\Rules;
 
 use App\Models\User;
-use App\Traits\HasPhone;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class UniquePhone implements Rule
+class UniqueEmail implements Rule
 {
-    use HasPhone;
-
     /**
      * Create a new rule instance.
      *
@@ -30,8 +27,7 @@ class UniquePhone implements Rule
      */
     public function passes($attribute, $value)
     {
-        $phone = $this->preparePhone($value);
-        $user = User::where('phone', $phone)->first();
+        $user = User::where('email', $value)->first();
 
         if (Auth::user() && $user) {
             return Auth::user()->id === $user->id;
@@ -47,6 +43,6 @@ class UniquePhone implements Rule
      */
     public function message()
     {
-        return 'Пользователь с таким телефоном уже зарегистрирован.';
+        return 'Пользователь с таким email уже зарегистрирован.';
     }
 }

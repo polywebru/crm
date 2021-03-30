@@ -78,6 +78,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Speciality::class);
     }
 
+    public function links(): HasMany
+    {
+        return $this->hasMany(Link::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
