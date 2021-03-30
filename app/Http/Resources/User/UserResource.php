@@ -16,8 +16,6 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $speciality = $this->whenLoaded('speciality');
-
         return [
             'id' => $this->resource->id,
             'username' => $this->resource->username,
@@ -31,8 +29,9 @@ class UserResource extends JsonResource
             'is_active' => $this->resource->is_active,
             'status' => $this->resource->status,
             'skills' => SkillResource::collection($this->whenLoaded('skills')),
-            'speciality' => new SpecialityResource($this->whenLoaded('speciality')),
-            'faculty' => new FacultyResource(optional($speciality)->faculty),
+            'links' => LinkResource::collection($this->whenLoaded('links')),
+            'speciality' => new SpecialityResource($this->speciality),
+            'faculty' => new FacultyResource(optional($this->speciality)->faculty),
             'study_begin_date' => $this->prepareDate($this->resource->study_begin_date),
             'study_duration' => $this->resource->study_duration,
             'email_verified_at' => $this->prepareDateTime($this->resource->email_verified_at),

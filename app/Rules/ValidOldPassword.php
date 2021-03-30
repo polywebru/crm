@@ -2,15 +2,12 @@
 
 namespace App\Rules;
 
-use App\Models\User;
-use App\Traits\HasPhone;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class UniquePhone implements Rule
+class ValidOldPassword implements Rule
 {
-    use HasPhone;
-
     /**
      * Create a new rule instance.
      *
@@ -30,14 +27,7 @@ class UniquePhone implements Rule
      */
     public function passes($attribute, $value)
     {
-        $phone = $this->preparePhone($value);
-        $user = User::where('phone', $phone)->first();
-
-        if (Auth::user() && $user) {
-            return Auth::user()->id === $user->id;
-        } else {
-            return ($user) ? false : true;
-        }
+        return Hash::check($value, Auth::user()->password);
     }
 
     /**
@@ -47,6 +37,6 @@ class UniquePhone implements Rule
      */
     public function message()
     {
-        return 'Пользователь с таким телефоном уже зарегистрирован.';
+        return 'Текущий пароль введён неверно.';
     }
 }
