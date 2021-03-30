@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use App\Rules\UniquePhone;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
     private const VARCHAR_MAX_LENGTH = 255;
-    private const PASSWORD_MIN_LENGTH = 5;
 
     public function rules()
     {
@@ -36,7 +33,7 @@ class RegisterRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:' . self::PASSWORD_MIN_LENGTH,
+                'min:5',
                 'confirmed',
             ],
             'last_name' => [
