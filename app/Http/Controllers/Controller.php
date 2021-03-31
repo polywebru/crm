@@ -28,7 +28,7 @@ class Controller extends BaseController
 
         $diff = $updatedTimestamp - $lastModifiedTimestamp;
 
-        if ($diff < 0) {
+        if ($diff <= 0) {
             throw new LastModifiedException();
         }
     }

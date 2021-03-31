@@ -38,6 +38,7 @@ class UserResource extends JsonResource
             'email_verified_at' => $this->prepareDateTime($this->resource->email_verified_at),
             'last_sign_in_at' => $this->prepareDateTime($this->resource->last_sign_in_at),
             'created_at' => $this->prepareDateTime($this->resource->created_at),
+            'updated_at' => $this->prepareDateTime($this->resource->updated_at),
         ];
     }
 }
