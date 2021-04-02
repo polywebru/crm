@@ -29,7 +29,7 @@ class UserManager
 
         if (!$this->user) {
             throw ValidationException::withMessages([
-                "email" => 'Неверный email',
+                "email" => 'Неверный email и/или пароль.',
             ]);
         }
 
