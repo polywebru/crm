@@ -19,7 +19,7 @@ class RegisterController extends Controller
         $token = $userManager->auth($email, $password);
         $userManager->updateLastSignInAt(now());
 
-        return new JsonResponse([], 204, [
+        return new JsonResponse([], 201, [
             'Authorization' => 'Bearer ' . $token,
         ]);
     }
