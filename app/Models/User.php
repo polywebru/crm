@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -81,6 +82,16 @@ class User extends Authenticatable implements JWTSubject
     public function links(): HasMany
     {
         return $this->hasMany(Link::class);
+    }
+
+    public function avatar(): BelongsTo
+    {
+        return $this->belongsTo(File::class, 'avatar_id');
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
     }
 
     public function getJWTIdentifier()

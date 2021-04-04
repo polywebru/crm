@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\AdditionalUserInfoRequest;
+use App\Http\Requests\User\AvatarRequest;
 use App\Http\Requests\User\ContactUserInfoRequest;
 use App\Http\Requests\User\LinksRequest;
 use App\Http\Requests\User\MainUserInfoRequest;
@@ -14,7 +15,6 @@ use App\LinksManager;
 use App\Models\User;
 use App\SkillsManager;
 use App\UserManager;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +54,13 @@ class UserController extends Controller
         $user = app(UserManager::class, ['user' => Auth::user()])->update($request->validated());
 
         return new UserResource($user);
+    }
+
+    public function updateAvatar(AvatarRequest $request)
+    {
+        $file = app(UserManager::class, ['user' => Auth::user()])->updateAvatar($request->file('avatar'));
+
+        return response()->file($file->filepath);
     }
 
     public function updatePassword(PasswordRequest $request): UserResource
