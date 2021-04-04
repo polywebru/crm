@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Models\File;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\HasPhone;
 use App\Traits\HasUsername;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -83,6 +86,23 @@ class UserManager
         $params['phone'] = $this->preparePhone($params['phone']);
 
         return $this->update($params);
+    }
+
+    public function updateAvatar(UploadedFile $file): File
+    {
+        if ($this->user->avatar) {
+            $avatar = $this->user->avatar;
+            $this->user->avatar()->associate(null);
+            $this->user->save();
+
+            app(FileManager::class, ['file' => $avatar])->delete();
+        }
+
+        $file = app(UploadedFileManager::class)->store($file, $this->user);
+        $this->user->avatar()->associate($file);
+        $this->user->save();
+
+        return $file;
     }
 
     public function updatePassword(string $password): User
