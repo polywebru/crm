@@ -14,6 +14,8 @@ class Link extends Model
     public const TELEGRAM_TYPE = 'tg';
     public const OK_TYPE = 'ok';
     public const FACEBOOK_TYPE = 'fb';
+    public const INSTAGRAM_TYPE = 'ig';
+    public const GITHUB_TYPE = 'gh';
     public const OTHER_TYPE = 'other';
 
     public const TYPES = [
@@ -21,6 +23,8 @@ class Link extends Model
         self::TELEGRAM_TYPE => 'Telegram',
         self::OK_TYPE => 'Одноклассники',
         self::FACEBOOK_TYPE => 'Facebook',
+        self::INSTAGRAM_TYPE => 'Instagram',
+        self::GITHUB_TYPE => 'GitHub',
         self::OTHER_TYPE => 'Другое',
     ];
 
