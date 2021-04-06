@@ -10,7 +10,6 @@ use App\Traits\HasPhone;
 use App\Traits\HasUsername;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -115,8 +114,46 @@ class UserManager
         return $this->update(['password' => $password]);
     }
 
-    public function updateLastSignInAt(Carbon $date)
+    public function updateLastSignInAt(Carbon $date): User
     {
-        $this->update(['last_sign_in_at' => $date]);
+        return $this->update(['last_sign_in_at' => $date]);
+    }
+
+    public function updateStatus(string $status): User
+    {
+        return $this->update(['status' => $status]);
+    }
+
+    public function activate(): User
+    {
+        if ($this->user->activable()) {
+            return $this->update(['is_active' => true]);
+        } else {
+            throw new \Exception('Пользователь уже активирован');
+        }
+    }
+
+    public function deactivate(): User
+    {
+        if ($this->user->deactivable()) {
+            return $this->update(['is_active' => false]);
+        } else {
+            throw new \Exception('Пользователь уже деактивирован');
+        }
+    }
+
+    public function updateRolesAndPermissions(array $roles, array $permissions): User
+    {
+        $permissionsManager = app(PermissionsManager::class);
+
+        $this->user = $permissionsManager->setRolesToUser($roles, $this->user);
+        $this->user = $permissionsManager->setPermissionsToUser($permissions, $this->user);
+
+        return $this->user;
+    }
+
+    public function delete()
+    {
+        $this->user->delete();
     }
 }
