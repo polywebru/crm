@@ -32,6 +32,8 @@ class UserFactory extends Factory
             'middle_name' => $this->faker->firstName,
             'gender' => ($this->faker->boolean) ? 'male' : 'female',
             'date_birth' => $this->faker->dateTime,
+            'is_active' => true,
+            'status' => 'intern',
             'speciality_id' => function () {
                 return Speciality::factory()->create()->id;
             },
