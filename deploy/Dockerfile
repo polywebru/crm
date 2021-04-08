@@ -13,5 +13,5 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-COPY ../composer.json ../composer.lock ./
+COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-interaction
