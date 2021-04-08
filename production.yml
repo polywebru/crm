@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  crm-php-fpm:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile.production
