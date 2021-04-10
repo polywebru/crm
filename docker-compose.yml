@@ -22,6 +22,7 @@ services:
       - ./bootstrap:/var/www/bootstrap
       - ./config:/var/www/config
       - ./database:/var/www/database
+      - ./deploy/wait-for-it.sh:/var/www/deploy/wait-for-it.sh
       - ./public:/var/www/public
       - ./resources:/var/www/resources
       - ./routes:/var/www/routes
@@ -42,13 +43,14 @@ services:
   crm-mysql:
     image: mysql:8
     volumes:
+      - ./deploy/mysql/init-testing-db.sql:/docker-entrypoint-initdb.d/init-testing-db.sql
       - ./docker/mysql:/var/lib/mysql
     ports:
       - "33080:3306"
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: supersecret
     networks:
       - crm-network
