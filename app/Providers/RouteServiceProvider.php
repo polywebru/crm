@@ -74,7 +74,7 @@ class RouteServiceProvider extends ServiceProvider
     public function mapUserApiRoutes()
     {
         Route::prefix('api/v1')
-            ->middleware(['api', 'auth'])
+            ->middleware(['api', 'auth', 'user.active'])
             ->namespace($this->userApiNamespace)
             ->group(base_path('routes/api/user.php'));
     }
@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
     public function mapAdminApiRoutes()
     {
         Route::prefix('api/v1/admin')
-            ->middleware(['api', 'auth', 'admin'])
+            ->middleware(['api', 'auth', 'user.active', 'admin'])
             ->namespace($this->adminApiNamespace)
             ->name('admin.')
             ->group(base_path('/routes/api/admin.php'));
