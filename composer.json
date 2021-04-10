@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "propaganistas/laravel-phone": "^4.3",
         "spatie/laravel-permission": "^4.0",
+        "squizlabs/php_codesniffer": "^3.6",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
@@ -52,6 +53,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "app:cs": [
+            "@app:cs-folders",
+            "@app:cs-database-folder"
+        ],
+        "app:cs-folders": [
+            "phpcs --standard=PSR12 --encoding=utf-8 -p app -p tests -p config -p routes"
+        ],
+        "app:cs-database-folder": [
+            "phpcs --standard=PSR12 --encoding=utf-8 -p database --exclude=PSR1.Classes.ClassDeclaration"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

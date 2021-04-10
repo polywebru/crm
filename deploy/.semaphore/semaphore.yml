@@ -1,0 +1,47 @@
+version: v1.0
+name: Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+global_job_config:
+  secrets:
+    - name: crm
+  prologue:
+    commands:
+      - export DEVELOPMENT_IMAGE="$DOCKER_HUB_USER/$DOCKER_HUB_PROJECT_NAME:$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA"
+      - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+
+      - checkout
+      - cp $HOME/.env ./
+
+blocks:
+  - name: Build
+    dependencies: []
+    task:
+      jobs:
+        - name: docker build
+          commands:
+            - docker build -t $DEVELOPMENT_IMAGE -f ./deploy/Dockerfile .
+            - docker push $DEVELOPMENT_IMAGE
+
+  - name: Run code analysis
+    dependencies: ["Build"]
+    task:
+      jobs:
+        - name: php_codesniffer
+          commands:
+            - docker pull $DEVELOPMENT_IMAGE
+            - docker-compose run --name=ci-container -d crm-php-fpm
+            - docker exec ci-container composer app:cs
+
+  - name: Run tests
+    dependencies: ["Build"]
+    task:
+      jobs:
+        - name: phpunit
+          commands:
+            - docker pull $DEVELOPMENT_IMAGE
+            - docker-compose run --name=ci-container -d crm-php-fpm
+            - docker exec ci-container php artisan migrate --seed --force
+            - docker exec ci-container phpunit
