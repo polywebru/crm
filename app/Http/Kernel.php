@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\VerifyAdmin;
+use App\Http\Middleware\CheckUserIsActive;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'admin' => VerifyAdmin::class,
+        'user.active' => CheckUserIsActive::class,
     ];
 }
