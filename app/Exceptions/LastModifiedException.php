@@ -6,8 +6,8 @@ use Illuminate\Http\Response;
 
 class LastModifiedException extends BaseException
 {
-    public function render()
+    public function render(string $message = null, $errorCode = 500, int $statusCode = null)
     {
-        return response([], Response::HTTP_NOT_MODIFIED);
+        return parent::render(null, Response::HTTP_NOT_MODIFIED);
     }
 }
