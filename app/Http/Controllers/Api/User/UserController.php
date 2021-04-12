@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $user = app(UserManager::class, ['user' => Auth::user()])->updateContactInfo($request->validated());
 
-        return new UserResource($user->load('specialities'));
+        return new UserResource($user);
     }
 
     public function updateAdditionalInfo(AdditionalUserInfoRequest $request): UserResource

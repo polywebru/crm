@@ -17,7 +17,7 @@ class MainUserInfoRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:' . self::VARCHAR_MAX_LENGTH],
             'middle_name' => ['nullable', 'string', 'max:' . self::VARCHAR_MAX_LENGTH],
             'gender' => ['nullable', 'string', Rule::in(['male', 'female'])],
-            'date_birth' => ['nullable', 'date'],
+            'date_birth' => ['nullable', 'date', 'date_format:Y-m-d'],
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\File;
 use App\Models\Role;
+use App\Models\Speciality;
 use App\Models\User;
 use App\Traits\HasPhone;
 use App\Traits\HasUsername;
@@ -74,6 +75,10 @@ class UserManager
     {
         if (isset($params['password'])) {
             $params['password'] = Hash::make($params['password']);
+        }
+
+        if (isset($params['speciality_id'])) {
+            $this->user->speciality()->associate(Speciality::findOrFail($params['speciality_id']));
         }
 
         $this->user->update($params);
