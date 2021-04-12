@@ -4,10 +4,13 @@ namespace Tests\Feature\Api;
 
 use App\Models\Link;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class SettingsControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function testInvoke()
     {
         $user = User::factory()->create();
