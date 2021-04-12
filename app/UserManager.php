@@ -137,6 +137,16 @@ class UserManager
         }
     }
 
+    public function updateRolesAndPermissions(array $roles, array $permissions): User
+    {
+        $permissionsManager = app(PermissionsManager::class);
+
+        $this->user = $permissionsManager->setRolesToUser($roles, $this->user);
+        $this->user = $permissionsManager->setPermissionsToUser($permissions, $this->user);
+
+        return $this->user;
+    }
+
     public function delete()
     {
         $this->user->delete();

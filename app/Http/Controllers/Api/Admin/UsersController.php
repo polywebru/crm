@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PermissionsRequest;
 use App\Http\Requests\Admin\StatusRequest;
-use App\Http\Resources\User\UserResource;
+use App\Http\Resources\Admin\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use App\Traits\HasDatatableFilters;
 use App\UserManager;
 use Illuminate\Http\JsonResponse;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
@@ -17,7 +20,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $builder = User::with('roles');
+        $builder = User::with('roles', 'permissions');
 
         return DataTables::eloquent($builder)
             ->filterColumn(...$this->filterInteger('id'))
@@ -44,6 +47,23 @@ class UsersController extends Controller
     public function changeStatus(StatusRequest $request, User $user)
     {
         $user = app(UserManager::class, ['user' => $user])->updateStatus($request->status);
+
+        return new UserResource($user);
+    }
+
+    public function permissions(PermissionsRequest $request, User $user)
+    {
+        $roles = [];
+        $permissions = [];
+
+        foreach ($request->roles as $roleId) {
+            $roles[] = Role::findORFail($roleId);
+        }
+        foreach ($request->permissions as $permissionId) {
+            $permissions[] = Permission::findOrFail($permissionId);
+        }
+
+        $user = app(UserManager::class, ['user' => $user])->updateRolesAndPermissions($roles, $permissions);
 
         return new UserResource($user);
     }
