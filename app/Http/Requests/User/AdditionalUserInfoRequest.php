@@ -12,7 +12,7 @@ class AdditionalUserInfoRequest extends FormRequest
     {
         return [
             'speciality_id' => ['nullable', 'numeric', 'exists:specialities,id'],
-            'study_begin_date' => ['nullable', 'date'],
+            'study_begin_date' => ['nullable', 'date', 'date_format:Y-m-d'],
             'study_duration' => ['nullable', 'string', Rule::in(array_flip(User::STUDY_DURATIONS))],
         ];
     }

@@ -61,6 +61,7 @@ class RegisterRequest extends FormRequest
             'date_birth' => [
                 'nullable',
                 'date',
+                'date_format:Y-m-d',
             ],
         ];
     }
