@@ -22,6 +22,8 @@ class User extends Authenticatable implements JWTSubject
 
     public $guard_name = 'api';
 
+    public const PASSWORD_MIN_LENGTH = 5;
+
     public const BAKALAVRIAT_DURATION = 'bakalavriat';
     public const SPECIALITET_DURATION = 'specialitet';
     public const MAGISTRATURA_DURATION = 'magistratura';
