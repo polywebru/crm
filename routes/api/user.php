@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', 'UserController@index');
-    Route::post('/main-info', 'UserController@updateMainInfo');
-    Route::post('/contact-info', 'UserController@updateContactInfo');
-    Route::post('/additional-info', 'UserController@updateAdditionalInfo');
-    Route::post('/avatar', 'UserController@updateAvatar');
-    Route::post('/password', 'UserController@updatePassword');
-    Route::post('/links', 'UserController@links');
-    Route::post('/skills', 'UserController@skills');
+    Route::put('/main-info', 'UserController@updateMainInfo');
+    Route::put('/contact-info', 'UserController@updateContactInfo');
+    Route::put('/additional-info', 'UserController@updateAdditionalInfo');
+    Route::put('/avatar', 'UserController@updateAvatar');
+    Route::put('/password', 'UserController@updatePassword');
+    Route::put('/links', 'UserController@links');
+    Route::put('/skills', 'UserController@skills');
     Route::get('roles-and-permissions', 'RolesAndPermissionsController');
 });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\UniqueUsername;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -12,7 +13,7 @@ class MainUserInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => ['required', 'string', 'unique:users'],
+            'username' => ['required', 'string', new UniqueUsername()],
             'last_name' => ['required', 'string', 'max:' . self::VARCHAR_MAX_LENGTH],
             'first_name' => ['required', 'string', 'max:' . self::VARCHAR_MAX_LENGTH],
             'middle_name' => ['nullable', 'string', 'max:' . self::VARCHAR_MAX_LENGTH],
