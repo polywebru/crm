@@ -14,7 +14,7 @@ class UsersController extends Controller
     public function index(User $user)
     {
         if (Auth::user()->can('view user profile')) {
-            $user = $user->load('links');
+            $user = $user->load('skills', 'links', 'speciality', 'speciality.faculty');
 
             return new UserResource($user);
         } else {

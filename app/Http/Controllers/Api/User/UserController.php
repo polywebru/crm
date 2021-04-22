@@ -39,21 +39,21 @@ class UserController extends Controller
     {
         $user = app(UserManager::class, ['user' => Auth::user()])->update($request->validated());
 
-        return new UserResource($user);
+        return new UserResource($user->load('skills', 'links', 'speciality', 'speciality.faculty'));
     }
 
     public function updateContactInfo(ContactUserInfoRequest $request): UserResource
     {
         $user = app(UserManager::class, ['user' => Auth::user()])->updateContactInfo($request->validated());
 
-        return new UserResource($user);
+        return new UserResource($user->load('skills', 'links', 'speciality', 'speciality.faculty'));
     }
 
     public function updateAdditionalInfo(AdditionalUserInfoRequest $request): UserResource
     {
         $user = app(UserManager::class, ['user' => Auth::user()])->update($request->validated());
 
-        return new UserResource($user);
+        return new UserResource($user->load('skills', 'links', 'speciality', 'speciality.faculty'));
     }
 
     public function updateAvatar(AvatarRequest $request)
@@ -67,7 +67,7 @@ class UserController extends Controller
     {
         $user = app(UserManager::class, ['user' => Auth::user()])->updatePassword($request->password);
 
-        return new UserResource($user);
+        return new UserResource($user->load('skills', 'links', 'speciality', 'speciality.faculty'));
     }
 
     public function links(LinksRequest $request): Response
