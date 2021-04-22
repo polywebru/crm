@@ -10,7 +10,7 @@ class SkillsRequest extends FormRequest
     {
         return [
             'skills' => ['required', 'array'],
-            'skills.*' => ['nullable', 'string'],
+            'skills.*.name' => ['nullable', 'string'],
         ];
     }
 }

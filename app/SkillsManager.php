@@ -12,7 +12,7 @@ class SkillsManager
         $this->deleteUserSkills($user);
 
         foreach ($skills as $skill) {
-            app(SkillManager::class)->create(['name' => $skill], $user);
+            app(SkillManager::class)->create(['name' => $skill['name']], $user);
         }
     }
 
