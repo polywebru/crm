@@ -21,7 +21,7 @@ class CheckUserIsActive
         if (Auth::user()->is_active) {
             return $next($request);
         } else {
-            throw new InactiveUserException();
+            throw new InactiveUserException(Auth::user());
         }
     }
 }
