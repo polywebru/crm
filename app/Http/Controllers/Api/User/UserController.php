@@ -56,7 +56,7 @@ class UserController extends Controller
         return new UserResource($user->load('skills', 'links', 'speciality', 'speciality.faculty'));
     }
 
-    public function updateAvatar(AvatarRequest $request)
+    public function setAvatar(AvatarRequest $request)
     {
         $file = app(UserManager::class, ['user' => Auth::user()])->updateAvatar($request->file('avatar'));
 
