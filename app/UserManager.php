@@ -109,6 +109,17 @@ class UserManager
         return $file;
     }
 
+    public function deleteAvatar(): void
+    {
+        if ($this->user->avatar) {
+            $avatar = $this->user->avatar;
+            $this->user->avatar()->associate(null);
+            $this->user->save();
+
+            app(FileManager::class, ['file' => $avatar])->delete();
+        }
+    }
+
     public function updatePassword(string $password): User
     {
         return $this->update(['password' => $password]);
