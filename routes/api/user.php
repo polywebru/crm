@@ -7,7 +7,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::put('/main-info', 'UserController@updateMainInfo');
     Route::put('/contact-info', 'UserController@updateContactInfo');
     Route::put('/additional-info', 'UserController@updateAdditionalInfo');
-    Route::put('/avatar', 'UserController@updateAvatar');
+    Route::post('/avatar', 'UserController@setAvatar');
     Route::put('/password', 'UserController@updatePassword');
     Route::put('/links', 'UserController@links');
     Route::put('/skills', 'UserController@skills');
