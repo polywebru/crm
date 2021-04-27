@@ -15,6 +15,7 @@ use App\LinksManager;
 use App\Models\User;
 use App\SkillsManager;
 use App\UserManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,15 @@ class UserController extends Controller
         $file = app(UserManager::class, ['user' => Auth::user()])->updateAvatar($request->file('avatar'));
 
         return response()->file($file->filepath);
+    }
+
+    public function deleteAvatar()
+    {
+        app(UserManager::class, ['user' => Auth::user()])->deleteAvatar();
+
+        return new JsonResponse([
+            'status' => true,
+        ], 200);
     }
 
     public function updatePassword(PasswordRequest $request): UserResource
