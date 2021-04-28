@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'date_birth' => $this->resource->date_birth,
             'is_active' => $this->resource->is_active,
             'status' => $this->resource->status,
+            'avatar' => $this->resource->avatarBase64,
             'skills' => SkillResource::collection($this->whenLoaded('skills')),
             'links' => LinkResource::collection($this->whenLoaded('links')),
             'speciality' => new SpecialityResource($this->speciality),

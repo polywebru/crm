@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -91,6 +92,18 @@ class User extends Authenticatable implements JWTSubject
     public function files(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function getAvatarBase64Attribute(): ?string
+    {
+        $file = $this->avatar;
+
+        if (!$file) {
+            return null;
+        }
+
+        $storageFile = Storage::get('local/' . $file->filename);
+        return base64_encode($storageFile);
     }
 
     public function getJWTIdentifier()
