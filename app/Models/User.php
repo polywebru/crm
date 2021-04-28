@@ -94,18 +94,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(File::class);
     }
 
-    public function getAvatarBase64Attribute(): ?string
-    {
-        $file = $this->avatar;
-
-        if (!$file) {
-            return null;
-        }
-
-        $storageFile = Storage::get('local/' . $file->filename);
-        return base64_encode($storageFile);
-    }
-
     public function getJWTIdentifier()
     {
         return $this->getKey();

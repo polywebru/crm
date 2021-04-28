@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -25,5 +26,14 @@ class File extends Model
     public function getFilepathAttribute()
     {
         return storage_path() . '/app/local/' . $this->filename;
+    }
+
+    public function getBase64Attribute(): array
+    {
+        $storageFile = Storage::get('local/' . $this->filename);
+        return [
+            'base64' => base64_encode($storageFile),
+            'content_type' => $this->content_type,
+        ];
     }
 }

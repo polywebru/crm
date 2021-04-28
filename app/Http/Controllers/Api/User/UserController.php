@@ -62,11 +62,7 @@ class UserController extends Controller
     {
         $file = app(UserManager::class, ['user' => Auth::user()])->updateAvatar($request->file('avatar'));
 
-        $storageFile = Storage::get('local/' . $file->filename);
-
-        return new JsonResponse([
-            'avatar' => base64_encode($storageFile),
-        ]);
+        return new JsonResponse($file->base64);
     }
 
     public function deleteAvatar()
