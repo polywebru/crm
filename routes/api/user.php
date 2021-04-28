@@ -17,5 +17,4 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('{username}', 'UsersController@index');
-    Route::get('{username}/avatar', 'UsersController@avatar');
 });

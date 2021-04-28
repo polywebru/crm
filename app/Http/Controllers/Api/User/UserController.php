@@ -19,6 +19,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -61,7 +62,11 @@ class UserController extends Controller
     {
         $file = app(UserManager::class, ['user' => Auth::user()])->updateAvatar($request->file('avatar'));
 
-        return response()->file($file->filepath);
+        $storageFile = Storage::get('local/' . $file->filename);
+
+        return new JsonResponse([
+            'avatar' => base64_encode($storageFile),
+        ]);
     }
 
     public function deleteAvatar()
