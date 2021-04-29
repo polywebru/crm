@@ -16,6 +16,6 @@ WORKDIR /var/www
 COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-interaction --no-dev --prefer-dist --no-autoloader
 
-COPY ../ ./
+COPY . ./
 
 RUN composer dump-autoload --optimize
