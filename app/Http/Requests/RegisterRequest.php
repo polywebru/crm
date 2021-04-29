@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use App\Rules\UniqueEmail;
 use App\Rules\UniquePhone;
 use Illuminate\Foundation\Http\FormRequest;
@@ -35,7 +36,7 @@ class RegisterRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:5',
+                'min:' . User::PASSWORD_MIN_LENGTH,
                 'confirmed',
             ],
             'last_name' => [
