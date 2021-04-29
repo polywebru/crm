@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 
 class ForbiddenException extends BaseException
 {
-    public function render()
+    public function render(string $message = null, $errorCode = 500, int $statusCode = null)
     {
         return response([
             'success' => false,
